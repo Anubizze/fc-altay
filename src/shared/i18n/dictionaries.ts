@@ -28,6 +28,12 @@ export type Dictionary = {
     documents: string;
     admin: string;
     extrasAria: string;
+    /** Ссылка на /club в мобильном подменю (сводка портала). */
+    clubHub: string;
+    menuOpenAria: string;
+    menuCloseAria: string;
+    menuTitle: string;
+    mainNavAria: string;
   };
   clubAbout: {
     history: string;
@@ -221,7 +227,12 @@ const ru: Dictionary = {
     partners: "Партнёры",
     documents: "Документы",
     admin: "CMS",
-    extrasAria: "Дополнительные разделы"
+    extrasAria: "Дополнительные разделы",
+    clubHub: "Портал «Клуб»",
+    menuOpenAria: "Открыть меню навигации",
+    menuCloseAria: "Закрыть меню",
+    menuTitle: "Разделы сайта",
+    mainNavAria: "Основная навигация"
   },
   clubAbout: {
     history: "История",
@@ -516,7 +527,12 @@ const kk: Dictionary = {
     partners: "Серіктестер",
     documents: "Құжаттар",
     admin: "CMS бақылау",
-    extrasAria: "Қосымша бөлімдер"
+    extrasAria: "Қосымша бөлімдер",
+    clubHub: "«Клуб» порталы",
+    menuOpenAria: "Навигация мәзірін ашу",
+    menuCloseAria: "Мәзірді жабу",
+    menuTitle: "Сайт бөлімдері",
+    mainNavAria: "Негізгі навигация"
   },
   clubAbout: {
     history: "Тарих",
