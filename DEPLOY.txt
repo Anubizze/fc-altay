@@ -1,9 +1,5 @@
-Vercel (репозиторий с приложением в папке frontend)
+Vercel
 
-1. Vercel → Project → Settings → General → Root Directory: frontend
-   (обязательно, иначе не найдёт Next.js и lockfile.)
-
-2. Build / Install оставь по умолчанию или как в frontend/vercel.json
-   (pnpm install --frozen-lockfile, pnpm run build).
-
-3. После смены Root Directory сделай Redeploy.
+1. После распаковки (flatten.bat / flatten.sh) в корне лежат package.json, src/, next.config.mjs.
+2. В настройках проекта Vercel поле Root Directory должно быть ПУСТЫМ (корень репозитория).
+3. Если раньше было указано "frontend" — очистите и сделайте Redeploy.
