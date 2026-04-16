@@ -1,0 +1,12 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "files.exclude": {
+    "frontend": true
+  },
+  "search.exclude": {
+    "frontend": true
+  },
+  "files.watcherExclude": {
+    "**/frontend/**": true
+  }
+}

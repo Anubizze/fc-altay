@@ -1,9 +1,6 @@
-Сайт ФК «Алтай» (Next.js 14).
+ФК «Алтай» Оскемен — сайт на Next.js 14.
 
-Один раз распаковать проект из папки frontend в корень репозитория:
-  Windows: двойной клик по flatten.bat или из cmd: flatten.bat
-  Git Bash / macOS / Linux: chmod +x flatten.sh && ./flatten.sh
+Локально: pnpm install && pnpm dev
+Сборка: pnpm build
 
-Затем: pnpm install && pnpm build
-
-Vercel: подключить репозиторий, Root Directory оставить пустым (корень = Next.js).
+Vercel: подключить репозиторий, Root Directory не указывать (корень = приложение).

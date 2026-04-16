@@ -2,6 +2,11 @@ import type { StandingForm, StandingRow } from "@/shared/content/site-content";
 import { leagueStandings, SITE_LOGO_SRC } from "@/shared/content/site-content";
 import type { AppLocale } from "@/shared/lib/locale-path";
 
+/** Next.js: опции fetch с кэшем (тип DOM RequestInit их не знает). */
+type NextFetchInit = RequestInit & {
+  next?: { revalidate?: number; tags?: string[] };
+};
+
 const KFF_ORIGIN = "https://kffleague.kz";
 const REVALIDATE_SEC = 1800;
 
@@ -459,7 +464,7 @@ async function fetchTsdSearchBadgeMap(queries: string[]): Promise<Map<string, st
         try {
           const res = await fetch(
             `https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t=${encodeURIComponent(q)}`,
-            { next: { revalidate: 86_400 } }
+            { next: { revalidate: 86_400 } } satisfies NextFetchInit
           );
           if (!res.ok) return;
           const data = (await res.json()) as { teams?: TsdbTeamHit[] | null };
@@ -547,7 +552,7 @@ async function mergeTheSportsDbBadges(rows: StandingRow[]): Promise<void> {
   try {
     const res = await fetch(
       "https://www.thesportsdb.com/api/v1/json/3/lookuptable.php?l=4649",
-      { next: { revalidate: 3600 } }
+      { next: { revalidate: 3600 } } satisfies NextFetchInit
     );
     if (res.ok) {
       const data = (await res.json()) as {
@@ -621,7 +626,7 @@ export async function getKffPremierStandings(locale: AppLocale): Promise<Standin
         Accept: "text/html,application/xhtml+xml",
         "User-Agent": "Mozilla/5.0 (compatible; FCAltaiOskemen/1.0; +https://fcaltay.kz)"
       }
-    });
+    } satisfies NextFetchInit);
     if (!res.ok) return null;
     const html = await res.text();
     const data = extractNextDataJson(html);

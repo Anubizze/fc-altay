@@ -1,5 +1,2 @@
-Vercel
-
-1. После распаковки (flatten.bat / flatten.sh) в корне лежат package.json, src/, next.config.mjs.
-2. В настройках проекта Vercel поле Root Directory должно быть ПУСТЫМ (корень репозитория).
-3. Если раньше было указано "frontend" — очистите и сделайте Redeploy.
+Vercel: в настройках проекта поле Root Directory оставьте пустым.
+Установка: pnpm install (есть vercel.json с framework nextjs).
