@@ -391,7 +391,7 @@ function extractNextDataJson(html: string): unknown | null {
   }
 }
 
-/** Эмблемы с внешних доменов — через прокси (Referer / блокировки). Локальные `/...` и `data:` не трогаем. */
+
 export function toProxiedLogoSrc(logoUrl: string | undefined): string | undefined {
   if (!logoUrl) return undefined;
   if (logoUrl.startsWith("/") || logoUrl.startsWith("data:")) return logoUrl;
