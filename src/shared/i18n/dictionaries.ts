@@ -31,6 +31,7 @@ export type Dictionary = {
   };
   clubAbout: {
     history: string;
+    regionFootballHistory: string;
     achievements: string;
     infrastructure: string;
     contacts: string;
@@ -122,6 +123,7 @@ export type Dictionary = {
     teamCoaching: PageIntro;
     club: PageIntro;
     clubHistory: PageIntro;
+    clubRegionFootballHistory: PageIntro;
     clubAchievements: PageIntro;
     clubInfrastructure: PageIntro;
     clubContacts: PageIntro;
@@ -188,6 +190,7 @@ export type Dictionary = {
       qj: string;
       center: string;
       history: string;
+      regionFootballHistory: string;
       achievements: string;
       infrastructure: string;
       contacts: string;
@@ -222,6 +225,7 @@ const ru: Dictionary = {
   },
   clubAbout: {
     history: "История",
+    regionFootballHistory: "История футбола Восточного Казахстана",
     achievements: "Достижения",
     infrastructure: "Инфраструктура",
     contacts: "Контакты"
@@ -351,6 +355,12 @@ const ru: Dictionary = {
       description:
         "Ключевые шаги после создания ФК «Алтай Өскемен» в 2024 году: лицензия, участие в Премьер-лиге, инфраструктура, работа с детьми и сообществом.\n\nОтдельно — открытие филиала футбольного центра в городе Алтай в 2025 году."
     },
+    clubRegionFootballHistory: {
+      eyebrow: "Регион",
+      title: "История футбола Восточного Казахстана",
+      description:
+        "От любительских команд при заводах и вузах до «Востока», выступлений в чемпионате Казахстана и еврокубках — и до современного бренда «Алтай Өскемен» в Премьер-лиге."
+    },
     clubAchievements: {
       eyebrow: "Достижения",
       title: "Титулы и рекорды",
@@ -475,6 +485,7 @@ const ru: Dictionary = {
       qj: "Состав и турнирная таблица QJ League.",
       center: "Группы, тренеры, информация о наборе в футбольный центр.",
       history: "Этапы развития клуба.",
+      regionFootballHistory: "Футбол в регионе: СССР, «Восток», чемпионат РК.",
       achievements: "Титулы и награды.",
       infrastructure: "Стадион, база, VAR-комната.",
       contacts: "Адрес, карта, социальные сети."
@@ -509,6 +520,7 @@ const kk: Dictionary = {
   },
   clubAbout: {
     history: "Тарих",
+    regionFootballHistory: "Шығыс Қазақстандағы футбол тарихы",
     achievements: "Жетістіктер",
     infrastructure: "Инфрақұрылым",
     contacts: "Байланыс"
@@ -637,6 +649,12 @@ const kk: Dictionary = {
       description:
         "2024 жылы «Алтай Өскемен» ФК құрылғаннан кейінгі негізгі қадамдар: лицензия, Қазақстан чемпионатының Премьер-лигасындағы қатысу, инфрақұрылым, балалар және қоғаммен жұмыс.\n\n2025 жылы Алтай қаласында футбол орталығының филиалы ашылды."
     },
+    clubRegionFootballHistory: {
+      eyebrow: "Өңір",
+      title: "Шығыс Қазақстандағы футбол тарихы",
+      description:
+        "Зауыттар мен оқу орындарындағы әуесқой командалардан бастап «Шығыс» клубы, Қазақстан чемпионаты мен Еуропа кубогындағы қатысуға дейін — және бүгінгі Премьер-лигадағы «Алтай Өскемен» брендіне дейінгі жол."
+    },
     clubAchievements: {
       eyebrow: "Жетістіктер",
       title: "Титулдар мен рекордтар",
@@ -762,6 +780,7 @@ const kk: Dictionary = {
       qj: "Құрам және QJ League кестесі.",
       center: "Топтар, бапкерлер, іріктеу туралы ақпарат.",
       history: "Клуб даму кезеңдері.",
+      regionFootballHistory: "Өңірдегі футбол: КСРО, «Шығыс», ҚР чемпионаты.",
       achievements: "Титулдар мен марапаттар.",
       infrastructure: "Стадион, база, VAR бөлмесі.",
       contacts: "Мекенжай, карта, әлеуметтік желілер."

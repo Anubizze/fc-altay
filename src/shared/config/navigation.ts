@@ -26,6 +26,7 @@ export const secondaryNav: NavItem[] = [
 /** Подразделы «О клубе» (ТЗ п.8–11). */
 export const clubAboutLinks: { href: string; labelKey: keyof import("@/shared/i18n/dictionaries").Dictionary["clubAbout"] }[] = [
   { href: "/club/history", labelKey: "history" },
+  { href: "/club/region-football-history", labelKey: "regionFootballHistory" },
   { href: "/club/achievements", labelKey: "achievements" },
   { href: "/club/infrastructure", labelKey: "infrastructure" },
   { href: "/club/contacts", labelKey: "contacts" }
