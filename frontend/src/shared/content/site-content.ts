@@ -1,3 +1,7 @@
+import type { ContactItem } from "./contact-types";
+
+export type { ContactItem } from "./contact-types";
+
 /** Категории новостей по ТЗ (п.2). */
 export type NewsCategory =
   | "Все"
@@ -996,15 +1000,6 @@ export const coachesByTeam = [
     staff: footballCenter.coaches
   }
 ];
-
-export type ContactItem = {
-  title: string;
-  value: string;
-  /** Вторая строка значения (например улица под городом). */
-  valueLine2?: string;
-  hint: string;
-  valueHref?: string;
-};
 
 export const contacts: ContactItem[] = [
   {

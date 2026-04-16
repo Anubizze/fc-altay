@@ -12,7 +12,7 @@ export function HashScroll({ allowed }: HashScrollProps) {
     const id = window.location.hash.replace("#", "");
     if (!id || !allowed.includes(id)) return;
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [allowed.join(",")]);
+  }, [allowed]);
 
   return null;
 }
