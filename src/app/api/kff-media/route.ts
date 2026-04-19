@@ -5,7 +5,9 @@ function isAllowedHost(host: string): boolean {
     host === "kffleague.kz" ||
     host === "www.kffleague.kz" ||
     host.endsWith(".kffleague.kz") ||
-    host === "r2.thesportsdb.com"
+    host === "r2.thesportsdb.com" ||
+    host === "qjl.kz" ||
+    host === "www.qjl.kz"
   );
 }
 

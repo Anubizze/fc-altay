@@ -13,7 +13,7 @@ export default function MatchesPage({ params }: { params: { locale: string } }) 
 
       <section className="section">
         <Container>
-          <MatchesBoard dict={dict} />
+          <MatchesBoard dict={dict} locale={locale} />
         </Container>
       </section>
     </>

@@ -38,6 +38,35 @@ export type NewsItem = {
 export type MatchStatus = "upcoming" | "result";
 export type MediaType = "photo" | "video";
 
+/** Строка расписания / результата (главная, страница матчей). */
+export type MatchItem = {
+  status: MatchStatus;
+  /** Короткая дата для карточек. */
+  date: string;
+  tournament: string;
+  home: string;
+  away: string;
+  /** Для предстоящих — время (например «19:00»); для сыгранных — счёт «1:0». */
+  score: string;
+  venue: string;
+  outcome?: "win" | "loss" | "draw";
+  resultHighlight?: boolean;
+  protocolPdf?: string;
+  /** Номер тура (ПЛ). */
+  tour?: number;
+  /** Длинная строка даты в шапке «как на KFF» (локализованная). */
+  dateLong?: string | { ru: string; kk: string };
+  /** Ссылка на карточку матча на kffleague.kz. */
+  kffMatchUrl?: string;
+  /** YouTube KFF (опционально). */
+  kffYoutubeUrl?: string;
+  /** Погода, строкой как на KFF. */
+  weather?: string;
+  /** Абсолютный или относительный URL эмблемы (гость/хозяин). */
+  homeLogoUrl?: string;
+  awayLogoUrl?: string;
+};
+
 /** Стабильный публичный dummy-PDF для демо скачивания (ТЗ: PDF). */
 export const DEMO_PDF_URL =
   "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf";
@@ -784,9 +813,29 @@ export const qjStandings = [
   { pos: 4, team: "Regional Select", played: 8, points: 12, isClub: false }
 ];
 
-export const matchItems = [
+export const matchItems: MatchItem[] = [
   {
-    status: "upcoming" as MatchStatus,
+    status: "upcoming",
+    date: "19 апреля",
+    tournament: "Премьер-лига",
+    tour: 6,
+    dateLong: {
+      ru: "вс, 19 апр. 2026 г.",
+      kk: "жс, 2026 ж. 19 сәу."
+    },
+    home: "Қайсар",
+    away: "Алтай Өскемен",
+    score: "19:00",
+    venue: "Қайсар Арена, Қызылорда",
+    weather: "+17°C, Ясно",
+    kffMatchUrl: "https://kffleague.kz/ru/matches/929",
+    kffYoutubeUrl: "https://www.youtube.com/@KFFKazakhstan",
+    homeLogoUrl:
+      "https://r2.thesportsdb.com/images/media/team/badge/pj6ns81579285089.png",
+    awayLogoUrl: "/logo.png"
+  },
+  {
+    status: "upcoming",
     date: "09 апреля",
     tournament: "Кубок РК",
     home: "Алтай Өскемен",
@@ -795,7 +844,7 @@ export const matchItems = [
     venue: "Өскемен"
   },
   {
-    status: "upcoming" as MatchStatus,
+    status: "upcoming",
     date: "12 апреля",
     tournament: "Премьер-лига",
     home: "Алтай Өскемен",

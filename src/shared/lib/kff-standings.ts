@@ -1,5 +1,7 @@
+import type { LeagueTableId } from "@/shared/config/league-tables";
+import { KFF_TABLE_QUERIES, QJL_STANDINGS_PAGE } from "@/shared/config/league-tables";
 import type { StandingForm, StandingRow } from "@/shared/content/site-content";
-import { leagueStandings, SITE_LOGO_SRC } from "@/shared/content/site-content";
+import { leagueStandings, qjStandings, SITE_LOGO_SRC } from "@/shared/content/site-content";
 import type { AppLocale } from "@/shared/lib/locale-path";
 
 /** Next.js: опции fetch с кэшем (тип DOM RequestInit их не знает). */
@@ -263,37 +265,65 @@ function parseFormToken(c: unknown): StandingForm | null {
   return null;
 }
 
+function scoreStandingsRowQuality(o: Record<string, unknown>): number {
+  let row = 0;
+  if ("team" in o || "club" in o || "participant" in o || "command" in o) row += 4;
+  else if (typeof o.teamName === "string") row += 3;
+  if (typeof o.points === "number" || typeof o.point === "number" || typeof o.pts === "number")
+    row += 4;
+  if (
+    typeof o.played === "number" ||
+    typeof o.games === "number" ||
+    typeof o.matches === "number"
+  )
+    row += 2;
+  if (
+    typeof o.position === "number" ||
+    typeof o.place === "number" ||
+    typeof o.serialNumber === "number"
+  )
+    row += 2;
+  return row;
+}
+
+/** KПЛ (~16 команд). */
 function scoreStandingsArray(arr: unknown[]): number {
-  if (!Array.isArray(arr) || arr.length < 10 || arr.length > 24) return 0;
+  if (!Array.isArray(arr) || arr.length < 10 || arr.length > 28) return 0;
   let total = 0;
   let okRows = 0;
   for (const item of arr) {
     if (!item || typeof item !== "object") continue;
     const o = item as Record<string, unknown>;
-    let row = 0;
-    if ("team" in o || "club" in o || "participant" in o || "command" in o) row += 4;
-    else if (typeof o.teamName === "string") row += 3;
-    if (typeof o.points === "number" || typeof o.point === "number" || typeof o.pts === "number")
-      row += 4;
-    if (
-      typeof o.played === "number" ||
-      typeof o.games === "number" ||
-      typeof o.matches === "number"
-    )
-      row += 2;
-    if (
-      typeof o.position === "number" ||
-      typeof o.place === "number" ||
-      typeof o.serialNumber === "number"
-    )
-      row += 2;
+    const row = scoreStandingsRowQuality(o);
     if (row >= 8) {
       total += row;
       okRows++;
     }
   }
-  if (okRows < Math.min(10, arr.length - 2)) return 0;
+  if (okRows < Math.min(10, Math.max(0, arr.length - 2))) return 0;
   return total;
+}
+
+/** Малые турниры (QJL, группы 2 лиги). */
+function scoreStandingsArrayLoose(arr: unknown[]): number {
+  if (!Array.isArray(arr) || arr.length < 4 || arr.length > 36) return 0;
+  let total = 0;
+  let okRows = 0;
+  for (const item of arr) {
+    if (!item || typeof item !== "object") continue;
+    const o = item as Record<string, unknown>;
+    const row = scoreStandingsRowQuality(o);
+    if (row >= 6) {
+      total += row;
+      okRows++;
+    }
+  }
+  if (okRows < Math.min(3, arr.length)) return 0;
+  return total;
+}
+
+function directStandingsScore(arr: unknown[]): number {
+  return Math.max(scoreStandingsArray(arr), scoreStandingsArrayLoose(arr));
 }
 
 function tryDirectStandingsFromPageProps(data: unknown): unknown[] | null {
@@ -304,12 +334,12 @@ function tryDirectStandingsFromPageProps(data: unknown): unknown[] | null {
   if (!pageProps) return null;
   for (const key of ["standings", "table", "rows", "leaderboard", "tournamentTable"]) {
     const v = pageProps[key];
-    if (Array.isArray(v) && scoreStandingsArray(v) > 0) return v;
+    if (Array.isArray(v) && directStandingsScore(v) > 0) return v;
     if (v && typeof v === "object" && !Array.isArray(v)) {
       const o = v as Record<string, unknown>;
       for (const inner of ["rows", "data", "items", "teams"]) {
         const a = o[inner];
-        if (Array.isArray(a) && scoreStandingsArray(a) > 0) return a;
+        if (Array.isArray(a) && directStandingsScore(a) > 0) return a;
       }
     }
   }
@@ -323,7 +353,7 @@ function findBestStandingsArray(root: unknown): unknown[] | null {
     if (depth > 28) return;
     if (!obj || typeof obj !== "object") return;
     if (Array.isArray(obj)) {
-      const sc = scoreStandingsArray(obj);
+      const sc = Math.max(scoreStandingsArray(obj), scoreStandingsArrayLoose(obj));
       if (sc > 0) candidates.push({ arr: obj, score: sc });
       for (const item of obj) visit(item, depth + 1);
       return;
@@ -343,6 +373,20 @@ function findBestStandingsArray(root: unknown): unknown[] | null {
   });
 
   return candidates[0]?.arr ?? null;
+}
+
+/** Извлекает строки таблицы из HTML с __NEXT_DATA__ (KFF / QJL). */
+export function parseStandingsFromKffLikePageHtml(html: string): StandingRow[] | null {
+  const data = extractNextDataJson(html);
+  if (!data) return null;
+  const arr = tryDirectStandingsFromPageProps(data) ?? findBestStandingsArray(data);
+  if (!arr?.length) return null;
+  const rows = arr
+    .map((item, i) => mapRawRow(item, i))
+    .filter((r): r is StandingRow => r !== null);
+  if (rows.length < 3) return null;
+  rows.sort((a, b) => a.pos - b.pos);
+  return rows;
 }
 
 function mapRawRow(raw: unknown, index: number): StandingRow | null {
@@ -532,6 +576,18 @@ const TSDB_BADGE_FALLBACK: { re: RegExp; url: string }[] = [
   {
     re: /шахт[её]р|shakhter|shakter/i,
     url: "https://r2.thesportsdb.com/images/media/team/badge/k5kej81751478979.png"
+  },
+  {
+    re: /қызылжар|kyzylzhar/i,
+    url: "https://r2.thesportsdb.com/images/media/team/badge/s9utii1772124239.png"
+  }
+];
+
+/** Только эти команды: всегда подставляем эмблему (KFF может отдавать битый URL). */
+const TSDB_BADGE_FORCE: { re: RegExp; url: string }[] = [
+  {
+    re: /қызылжар|kyzylzhar/i,
+    url: "https://r2.thesportsdb.com/images/media/team/badge/s9utii1772124239.png"
   }
 ];
 
@@ -541,6 +597,17 @@ function applyTsdbBadgeUrlFallbacks(rows: StandingRow[]): void {
     for (const { re, url } of TSDB_BADGE_FALLBACK) {
       if (re.test(row.team)) {
         row.logoUrl = url;
+        break;
+      }
+    }
+  }
+}
+
+function applyForcedTeamBadges(rows: StandingRow[]): void {
+  for (const row of rows) {
+    for (const { re, url } of TSDB_BADGE_FORCE) {
+      if (re.test(row.team)) {
+        row.logoUrl = normalizeTsdBadgeUrl(url);
         break;
       }
     }
@@ -596,14 +663,99 @@ async function mergeTheSportsDbBadges(rows: StandingRow[]): Promise<void> {
   }
 
   applyTsdbBadgeUrlFallbacks(rows);
+  applyForcedTeamBadges(rows);
 }
 
 /**
  * Таблица для сайта: данные KFF (или запасной статический список) + эмблемы (KFF / TheSportsDB / логотип клуба) + прокси URL.
  */
 export async function getPremierStandingsWithLogos(locale: AppLocale): Promise<StandingRow[]> {
-  const live = await getKffPremierStandings(locale);
-  const rows = (live ?? leagueStandings).map((r) => ({ ...r }));
+  const rows = await getStandingsWithLogosForLeague("pl", locale);
+  return rows;
+}
+
+function applyClubHighlightForLeague(rows: StandingRow[], league: LeagueTableId): void {
+  const patterns: Record<LeagueTableId, RegExp> = {
+    pl: /алтай|altai|өскемен|oskemen/i,
+    "2l": /алтай|жас|zhastar|өскемен|oskemen/i,
+    women: /алтай|жфк|жен|өскемен|oskemen/i,
+    qj: /алтай|altai|2009|өскемен|oskemen/i
+  };
+  const re = patterns[league];
+  for (const r of rows) {
+    r.isClub = re.test(r.team);
+  }
+}
+
+function qjFallbackRows(): StandingRow[] {
+  return qjStandings.map((r) => {
+    const team = r.team;
+    return {
+      pos: r.pos,
+      team,
+      short: abbreviate(team),
+      played: r.played,
+      wins: 0,
+      draws: 0,
+      losses: 0,
+      goalsFor: 0,
+      goalsAgainst: 0,
+      points: r.points,
+      form: [] as StandingForm[],
+      isClub: r.isClub,
+      logoUrl: undefined
+    };
+  });
+}
+
+/** Таблица по лиге: live с KFF / QJL, эмблемы TSDB и клубный логотип при необходимости. */
+export async function getStandingsWithLogosForLeague(
+  league: LeagueTableId,
+  locale: AppLocale
+): Promise<StandingRow[]> {
+  let live: StandingRow[] | null = null;
+
+  if (league === "qj") {
+    try {
+      const res = await fetch(QJL_STANDINGS_PAGE, {
+        next: { revalidate: REVALIDATE_SEC },
+        headers: {
+          Accept: "text/html,application/xhtml+xml",
+          "User-Agent": "Mozilla/5.0 (compatible; FCAltaiOskemen/1.0; +https://fcaltay.kz)"
+        }
+      } satisfies NextFetchInit);
+      if (res.ok) {
+        const html = await res.text();
+        live = parseStandingsFromKffLikePageHtml(html);
+        if (live) {
+          for (const r of live) {
+            if (r.logoUrl?.startsWith("/")) {
+              r.logoUrl = `https://qjl.kz${r.logoUrl}`;
+            }
+          }
+        }
+      }
+    } catch {
+      /* ignore */
+    }
+  } else {
+    live = await getKffStandingsFromQuery(locale, KFF_TABLE_QUERIES[league]);
+  }
+
+  let base: StandingRow[];
+  if (live && live.length > 0) {
+    base = live.map((r) => ({ ...r }));
+  } else if (league === "pl") {
+    base = leagueStandings.map((r) => ({ ...r }));
+  } else if (league === "qj") {
+    base = qjFallbackRows();
+  } else {
+    base = [];
+  }
+
+  const rows = base;
+
+  applyClubHighlightForLeague(rows, league);
 
   await mergeTheSportsDbBadges(rows);
 
@@ -617,10 +769,15 @@ export async function getPremierStandingsWithLogos(locale: AppLocale): Promise<S
   return rows;
 }
 
-export async function getKffPremierStandings(locale: AppLocale): Promise<StandingRow[] | null> {
+export async function getKffStandingsFromQuery(
+  locale: AppLocale,
+  query: Record<string, string>
+): Promise<StandingRow[] | null> {
   const path = locale === "kk" ? "/kz/table" : "/ru/table";
+  const qs = new URLSearchParams(query).toString();
+  const url = `${KFF_ORIGIN}${path}?${qs}`;
   try {
-    const res = await fetch(`${KFF_ORIGIN}${path}`, {
+    const res = await fetch(url, {
       next: { revalidate: REVALIDATE_SEC },
       headers: {
         Accept: "text/html,application/xhtml+xml",
@@ -629,21 +786,18 @@ export async function getKffPremierStandings(locale: AppLocale): Promise<Standin
     } satisfies NextFetchInit);
     if (!res.ok) return null;
     const html = await res.text();
-    const data = extractNextDataJson(html);
-    if (!data) return null;
-    const arr = tryDirectStandingsFromPageProps(data) ?? findBestStandingsArray(data);
-    if (!arr) return null;
-    const rows = arr
-      .map((item, i) => mapRawRow(item, i))
-      .filter((r): r is StandingRow => r !== null);
-    if (rows.length < 10) return null;
-    rows.sort((a, b) => a.pos - b.pos);
-    return rows;
+    return parseStandingsFromKffLikePageHtml(html);
   } catch {
     return null;
   }
 }
 
-export function kffTablePublicUrl(locale: AppLocale): string {
-  return `${KFF_ORIGIN}${locale === "kk" ? "/kz/table" : "/ru/table"}`;
+export async function getKffPremierStandings(locale: AppLocale): Promise<StandingRow[] | null> {
+  return getKffStandingsFromQuery(locale, KFF_TABLE_QUERIES.pl);
 }
+
+export function kffTablePublicUrl(locale: AppLocale): string {
+  return `${KFF_ORIGIN}${locale === "kk" ? "/kz/table" : "/ru/table"}?${new URLSearchParams(KFF_TABLE_QUERIES.pl).toString()}`;
+}
+
+export { leaguePublicTableUrl } from "@/shared/config/league-tables";

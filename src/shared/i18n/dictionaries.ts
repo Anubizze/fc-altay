@@ -1,3 +1,4 @@
+import type { LeagueTableId } from "@/shared/config/league-tables";
 import type { AppLocale } from "@/shared/lib/locale-path";
 
 export type PageIntro = {
@@ -81,11 +82,21 @@ export type Dictionary = {
     heroPromo: string;
     heroLeague: string;
     heroSeason: string;
+    /** Плейсхолдер {n} — номер тура (например «Тур 6»). */
+    matchHeroTour: string;
+    matchHeroKffMatchCard: string;
+    matchHeroKffYoutube: string;
+    matchHeroStadium: string;
   };
-  /** Подпись к данным турнирной таблицы ПЛ (источник kffleague.kz). */
+  /** Подпись к данным турнирной таблицы (KFF / QJL). */
   standings: {
     sourcePrefix: string;
+    /** Заглушка для превью на главной (только ПЛ). */
     sourceLinkLabel: string;
+    leagueTabsNav: string;
+    leagueTabs: Record<LeagueTableId, string>;
+    sourceLinkByLeague: Record<LeagueTableId, string>;
+    emptyTable: string;
     colRank: string;
     colTeam: string;
     colPlayed: string;
@@ -279,11 +290,29 @@ const ru: Dictionary = {
     aboutClub: "О клубе",
     heroPromo: "Выход в премьер-лигу",
     heroLeague: "Премьер-лига",
-    heroSeason: "Сезон 2026"
+    heroSeason: "Сезон 2026",
+    matchHeroTour: "Тур {n}",
+    matchHeroKffMatchCard: "Карточка матча на kffleague.kz",
+    matchHeroKffYoutube: "KFF League",
+    matchHeroStadium: "Стадион"
   },
   standings: {
     sourcePrefix: "Источник данных:",
     sourceLinkLabel: "турнирная таблица КПЛ на kffleague.kz",
+    leagueTabsNav: "Турнирные таблицы по лигам",
+    leagueTabs: {
+      pl: "ПЛ (основа)",
+      "2l": "2 лига (Жастар)",
+      women: "ЖФК",
+      qj: "QJ League"
+    },
+    sourceLinkByLeague: {
+      pl: "Турнирная таблица ПЛ на kffleague.kz",
+      "2l": "Таблица 2 лиги (группа B) на kffleague.kz",
+      women: "Таблица женской команды на kffleague.kz",
+      qj: "Турнирная таблица QJL на qjl.kz"
+    },
+    emptyTable: "Не удалось загрузить таблицу для выбранной лиги. Попробуйте позже или откройте источник по ссылке ниже.",
     colRank: "#",
     colTeam: "Команда",
     colPlayed: "И",
@@ -420,7 +449,7 @@ const ru: Dictionary = {
       eyebrow: "Турнир",
       title: "Турнирная таблица",
       description:
-        "Премьер-лига чемпионата Казахстана, 16 команд; строка «Алтай Өскемен» выделена (фрагмент таблицы на главной — вокруг позиции клуба)."
+        "Премьер-лига, 2 лига (Жастар), женская команда и QJ League — переключайте вкладки. Данные с сайтов Казахстанской футбольной федерации и QJL; строка «Алтай Өскемен» выделена."
     },
     media: {
       eyebrow: "Медиа",
@@ -579,11 +608,30 @@ const kk: Dictionary = {
     aboutClub: "Клуб жайлы",
     heroPromo: "Премьер-лигаға шығу",
     heroLeague: "Премьер-лига",
-    heroSeason: "2026 маусым"
+    heroSeason: "2026 маусым",
+    matchHeroTour: "{n} тур",
+    matchHeroKffMatchCard: "Матч картасы — kffleague.kz",
+    matchHeroKffYoutube: "KFF League",
+    matchHeroStadium: "Стадион"
   },
   standings: {
     sourcePrefix: "Дереккөз:",
     sourceLinkLabel: "KFF Премьер-лига кестесі (kffleague.kz)",
+    leagueTabsNav: "Лига бойынша кестелер",
+    leagueTabs: {
+      pl: "ПЛ (негізгі құрам)",
+      "2l": "2-лига (Жастар)",
+      women: "ЖФК",
+      qj: "QJ League"
+    },
+    sourceLinkByLeague: {
+      pl: "KFF Премьер-лига кестесі (kffleague.kz)",
+      "2l": "2-лига кестесі, B тобы (kffleague.kz)",
+      women: "Әйелдер командасының кестесі (kffleague.kz)",
+      qj: "QJL турнир кестесі (qjl.kz)"
+    },
+    emptyTable:
+      "Таңдалған лига үшін кесте жүктелмеді. Әрекетті кейінірек қайталаңыз немесе төмендегі сілтемеден ашыңыз.",
     colRank: "#",
     colTeam: "Команда",
     colPlayed: "И",
@@ -719,7 +767,7 @@ const kk: Dictionary = {
       eyebrow: "Турнир",
       title: "Турнир кестесі",
       description:
-        "Қазақстан чемпионатының Премьер-лигасы, 16 команда; «Алтай Өскемен» жолы ерекшеленеді (басты беттегі фрагмент — клуб орнының айналасында)."
+        "Премьер-лига, 2-лига (Жастар), әйелдер командасы және QJ League — бөлімдерді ауыстырыңыз. KFF және QJL сайттарының деректері; «Алтай Өскемен» бөлгіленеді."
     },
     media: {
       eyebrow: "Медиа",

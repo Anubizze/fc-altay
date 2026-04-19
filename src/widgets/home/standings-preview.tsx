@@ -23,7 +23,7 @@ export async function StandingsPreview({ locale, title, moreLabel }: StandingsPr
     <div className="standings-preview glass-card">
       <div className="standings-preview__head">
         <h3>{title}</h3>
-        <Link href={withLocale(locale, "/table")} className="standings-preview__link">
+        <Link href={withLocale(locale, "/table?league=pl")} className="standings-preview__link">
           {moreLabel}
         </Link>
       </div>
