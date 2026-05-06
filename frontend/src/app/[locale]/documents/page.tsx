@@ -18,8 +18,20 @@ export default function DocumentsPage({ params }: { params: { locale: string } }
           {documents.map((item) => (
             <DocumentCard
               key={item.pdfUrl}
-              title={locale === "kk" ? item.title.kk : item.title.ru}
-              description={locale === "kk" ? item.description.kk : item.description.ru}
+              title={
+                typeof item.title === "string"
+                  ? item.title
+                  : locale === "kk"
+                    ? item.title.kk
+                    : item.title.ru
+              }
+              description={
+                typeof item.description === "string"
+                  ? item.description
+                  : locale === "kk"
+                    ? item.description.kk
+                    : item.description.ru
+              }
               format={item.format}
               pdfUrl={item.pdfUrl}
               downloadLabel={dict.documents.downloadPdf}
