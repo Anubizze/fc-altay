@@ -1,0 +1,863 @@
+import type { LeagueTableId } from "@/shared/config/league-tables";
+import type { AppLocale } from "@/shared/lib/locale-path";
+
+export type PageIntro = {
+  eyebrow: string;
+  title: string;
+  description: string;
+};
+
+export type Dictionary = {
+  location: string;
+  /** Короткое имя клуба в шапке/подвале. */
+  brandTitle: string;
+  brandSubtitle: string;
+  nav: {
+    home: string;
+    /** Пункт ведёт на портал «Клуб» по брифу (ТЗ: раздел Клуб). */
+    club: string;
+    aboutClub: string;
+    clubSports: string;
+    news: string;
+    schedule: string;
+    results: string;
+    table: string;
+    squad: string;
+    contacts: string;
+    media: string;
+    partners: string;
+    documents: string;
+    admin: string;
+    extrasAria: string;
+    /** Ссылка на /club в мобильном подменю (сводка портала). */
+    clubHub: string;
+    menuOpenAria: string;
+    menuCloseAria: string;
+    menuTitle: string;
+    mainNavAria: string;
+  };
+  clubAbout: {
+    history: string;
+    regionFootballHistory: string;
+    achievements: string;
+    infrastructure: string;
+    contacts: string;
+  };
+  clubTeams: {
+    main: string;
+    reserve: string;
+    women: string;
+    qj: string;
+    center: string;
+  };
+  teamSection: {
+    roster: string;
+    administration: string;
+    coaching: string;
+  };
+  news: {
+    all: string;
+    main: string;
+    reserve: string;
+    women: string;
+    qj: string;
+    center: string;
+    instagram: string;
+    closePost: string;
+    openPostHint: string;
+    readMore: string;
+    backToNews: string;
+  };
+  langAria: string;
+  home: {
+    newsSlider: string;
+    nextMatch: string;
+    latestNews: string;
+    tableBlock: string;
+    partners: string;
+    allNews: string;
+    fullTable: string;
+    statsSeason: string;
+    aboutClub: string;
+    heroPromo: string;
+    heroLeague: string;
+    heroSeason: string;
+    /** Плейсхолдер {n} — номер тура (например «Тур 6»). */
+    matchHeroTour: string;
+    matchHeroKffMatchCard: string;
+    matchHeroKffYoutube: string;
+    matchHeroStadium: string;
+  };
+  /** Подпись к данным турнирной таблицы (KFF / QJL). */
+  standings: {
+    sourcePrefix: string;
+    /** Заглушка для превью на главной (только ПЛ). */
+    sourceLinkLabel: string;
+    leagueTabsNav: string;
+    leagueTabs: Record<LeagueTableId, string>;
+    sourceLinkByLeague: Record<LeagueTableId, string>;
+    emptyTable: string;
+    colRank: string;
+    colTeam: string;
+    colPlayed: string;
+    colWins: string;
+    colDraws: string;
+    colLosses: string;
+    colGoals: string;
+    colPoints: string;
+    colForm: string;
+  };
+  footer: {
+    navTitle: string;
+    contactsTitle: string;
+    lead: string;
+    brandTagline: string;
+    /** Группы ссылок в футере (колонки). */
+    navGroupMain: string;
+    navGroupSeason: string;
+    navGroupTeam: string;
+    navGroupMore: string;
+  };
+  documents: {
+    downloadPdf: string;
+  };
+  mediaSections: {
+    photos: string;
+    video: string;
+  };
+  contactsPage: {
+    mapEyebrow: string;
+    mapTitle: string;
+    mapHint: string;
+    socialTitle: string;
+  };
+  intros: {
+    news: PageIntro;
+    newsFeed: PageIntro;
+    matches: PageIntro;
+    team: PageIntro;
+    teamAdministration: PageIntro;
+    teamCoaching: PageIntro;
+    club: PageIntro;
+    clubHistory: PageIntro;
+    clubRegionFootballHistory: PageIntro;
+    clubAchievements: PageIntro;
+    clubInfrastructure: PageIntro;
+    clubContacts: PageIntro;
+    clubMain: PageIntro;
+    clubReserve: PageIntro;
+    clubWomen: PageIntro;
+    clubQj: PageIntro;
+    clubCenter: PageIntro;
+    table: PageIntro;
+    media: PageIntro;
+    documents: PageIntro;
+    partners: PageIntro;
+    admin: PageIntro;
+  };
+  clubUnit: {
+    roster: string;
+    coaches: string;
+    calendar: string;
+    standings: string;
+    results: string;
+    groups: string;
+    recruitment: string;
+    protocolPdf: string;
+    fcAbout: string;
+    fcContingent: string;
+    fcBranch: string;
+    fcMethodNote: string;
+    fcEnrollmentTable: string;
+    fcCategory: string;
+    fcCoach: string;
+    fcPhone: string;
+    /** Общий телефон линии набора в футбольный центр (в дополнение к номерам тренеров). */
+    fcEnrollmentHotline: string;
+    fcEnrollmentHotlineLead: string;
+    captains: string;
+  };
+  adminCms: {
+    title: string;
+    lead: string;
+    newsBlock: string;
+    matchesBlock: string;
+    documentsBlock: string;
+    hint: string;
+  };
+  matchesBoard: {
+    /** Заголовок якоря #schedule: предстоящие и прошедшие (ТЗ). */
+    schedule: string;
+    next: string;
+    upcoming: string;
+    pastInSchedule: string;
+    results: string;
+    resultsLead: string;
+  };
+  /** Тексты портала /club — со structure брифа (Клуб + О клубе). */
+  clubPortal: {
+    sportsTitle: string;
+    sportsLead: string;
+    aboutTitle: string;
+    aboutLead: string;
+    blurb: {
+      main: string;
+      reserve: string;
+      women: string;
+      qj: string;
+      center: string;
+      history: string;
+      regionFootballHistory: string;
+      achievements: string;
+      infrastructure: string;
+      contacts: string;
+    };
+  };
+  partnersPage: {
+    logoGridTitle: string;
+    tiersTitle: string;
+  };
+};
+
+const ru: Dictionary = {
+  location: "Өскемен, Қазақстан",
+  brandTitle: "ФК «Алтай Өскемен»",
+  brandSubtitle: "Сайт клуба · Премьер-лига",
+  nav: {
+    home: "Главная",
+    club: "Клуб",
+    aboutClub: "О клубе",
+    clubSports: "Команды клуба",
+    news: "Новости",
+    schedule: "Расписание",
+    results: "Результаты",
+    table: "Таблица",
+    squad: "Команда",
+    contacts: "Контакты",
+    media: "Медиа",
+    partners: "Партнёры",
+    documents: "Документы",
+    admin: "CMS",
+    extrasAria: "Дополнительные разделы",
+    clubHub: "Портал «Клуб»",
+    menuOpenAria: "Открыть меню навигации",
+    menuCloseAria: "Закрыть меню",
+    menuTitle: "Разделы сайта",
+    mainNavAria: "Основная навигация"
+  },
+  clubAbout: {
+    history: "История",
+    regionFootballHistory: "История футбола Восточного Казахстана",
+    achievements: "Достижения",
+    infrastructure: "Инфраструктура",
+    contacts: "Контакты"
+  },
+  clubTeams: {
+    main: "Основная",
+    reserve: "Дубль",
+    women: "Женская команда",
+    qj: "QJ League",
+    center: "Футбольный центр"
+  },
+  teamSection: {
+    roster: "Состав основы",
+    administration: "Администрация",
+    coaching: "Тренерский штаб"
+  },
+  news: {
+    all: "Все",
+    main: "Основная команда",
+    reserve: "Дубль",
+    women: "Женская команда",
+    qj: "QJ League",
+    center: "Футбольный центр",
+    instagram: "Instagram",
+    closePost: "Закрыть",
+    openPostHint: "Открыть пост Instagram",
+    readMore: "Ещё",
+    backToNews: "← Ко всем новостям"
+  },
+  langAria: "Язык интерфейса",
+  home: {
+    newsSlider: "Новости — слайдер",
+    nextMatch: "Ближайший матч",
+    latestNews: "Последние новости",
+    tableBlock: "Турнирная таблица",
+    partners: "Партнёры клуба",
+    allNews: "Все новости",
+    fullTable: "Полная таблица",
+    statsSeason: "Статистика сезона",
+    aboutClub: "О клубе",
+    heroPromo: "Выход в премьер-лигу",
+    heroLeague: "Премьер-лига",
+    heroSeason: "Сезон 2026",
+    matchHeroTour: "Тур {n}",
+    matchHeroKffMatchCard: "Карточка матча на kffleague.kz",
+    matchHeroKffYoutube: "KFF League",
+    matchHeroStadium: "Стадион"
+  },
+  standings: {
+    sourcePrefix: "Источник данных:",
+    sourceLinkLabel: "турнирная таблица КПЛ на kffleague.kz",
+    leagueTabsNav: "Турнирные таблицы по лигам",
+    leagueTabs: {
+      pl: "ПЛ (основа)",
+      "2l": "2 лига (Жастар)",
+      women: "ЖФК",
+      qj: "QJ League"
+    },
+    sourceLinkByLeague: {
+      pl: "Турнирная таблица ПЛ на kffleague.kz",
+      "2l": "Таблица 2 лиги (группа B) на kffleague.kz",
+      women: "Таблица женской команды на kffleague.kz",
+      qj: "Турнирная таблица QJL на qjl.kz"
+    },
+    emptyTable: "Не удалось загрузить таблицу для выбранной лиги. Попробуйте позже или откройте источник по ссылке ниже.",
+    colRank: "#",
+    colTeam: "Команда",
+    colPlayed: "И",
+    colWins: "В",
+    colDraws: "Н",
+    colLosses: "П",
+    colGoals: "Мячи",
+    colPoints: "О",
+    colForm: "Форма"
+  },
+  footer: {
+    navTitle: "Навигация",
+    contactsTitle: "Контакты",
+    lead:
+      "Официальный сайт ФК «Алтай Өскемен»: новости, матчи, таблица, состав, медиа и документы по регламенту.",
+    brandTagline: "Өскемен · Қазақстан",
+    navGroupMain: "Главное",
+    navGroupSeason: "Матчи и турнир",
+    navGroupTeam: "Команда",
+    navGroupMore: "Медиа и сервис"
+  },
+  documents: {
+    downloadPdf: "Скачать PDF"
+  },
+  mediaSections: {
+    photos: "Фотогалерея",
+    video: "Видео"
+  },
+  contactsPage: {
+    mapEyebrow: "Карта",
+    mapTitle: "Офис клуба и матчдей-центр",
+    mapHint:
+      "Интерактивная карта, схема стадиона или навигация по базе — встраивается по готовности.",
+    socialTitle: "Социальные сети"
+  },
+  intros: {
+    news: {
+      eyebrow: "Новости",
+      title: "Редакционный центр клуба",
+      description:
+        "Все категории по техническому заданию: основная, дубль, женская, QJ League и футбольный центр — с фильтром."
+    },
+    newsFeed: {
+      eyebrow: "Сейчас",
+      title: "Главный материал",
+      description: "Текущий акцент редакции — крупный анонс или репортаж."
+    },
+    matches: {
+      eyebrow: "Матчи",
+      title: "Расписание и результаты",
+      description:
+        "Предстоящие туры и протоколы завершённых матчей в формате, удобном для болельщика и медиа."
+    },
+    team: {
+      eyebrow: "Команда",
+      title: "Состав основной команды",
+      description:
+        "Заявка основы по линиям; дубль, академия и QJ League — в разделах «Команды клуба»."
+    },
+    teamAdministration: {
+      eyebrow: "Команда",
+      title: "Администрация клуба",
+      description: "Руководство: должности и визуальные профили (фото — по мере загрузки в CMS)."
+    },
+    teamCoaching: {
+      eyebrow: "Команда",
+      title: "Тренерский штаб всех направлений",
+      description:
+        "Тренеры и специалисты основной команды, дубля, женского состава, QJ League и футбольного центра."
+    },
+    club: {
+      eyebrow: "Клуб",
+      title: "«Алтай Өскемен»: команды и о клубе",
+      description:
+        "Основная команда, дубль, женский состав, QJ League и футбольный центр — единая спортивная вертикаль клуба.\n\nВ блоке «О клубе» собраны история, достижения, инфраструктура и контактная информация."
+    },
+    clubHistory: {
+      eyebrow: "История",
+      title: "Развитие клуба и региона",
+      description:
+        "Ключевые шаги после создания ФК «Алтай Өскемен» в 2024 году: лицензия, участие в Премьер-лиге, инфраструктура, работа с детьми и сообществом.\n\nОтдельно — открытие филиала футбольного центра в городе Алтай в 2025 году."
+    },
+    clubRegionFootballHistory: {
+      eyebrow: "Регион",
+      title: "История футбола Восточного Казахстана",
+      description:
+        "От любительских команд при заводах и вузах до «Востока», выступлений в чемпионате Казахстана и еврокубках — и до современного бренда «Алтай Өскемен» в Премьер-лиге."
+    },
+    clubAchievements: {
+      eyebrow: "Достижения",
+      title: "Титулы и рекорды",
+      description: "Цифры и формулировки можно расширять по мере наполнения контентом."
+    },
+    clubInfrastructure: {
+      eyebrow: "Инфраструктура",
+      title: "Стадион, база, VAR",
+      description:
+        "Среда для спорта и медиа: арена, тренировочный комплекс, студия и регламентная VAR-комната."
+    },
+    clubContacts: {
+      eyebrow: "Контакты",
+      title: "Связаться с клубом",
+      description:
+        "Электронная почта, телефон офиса и адрес приёма в Усть-Каменогорске.\n\nОтдельная линия — для вопросов о наборе в футбольный центр; прямые номера тренеров указаны на странице центра."
+    },
+    clubMain: {
+      eyebrow: "Основная",
+      title: "Основная команда",
+      description:
+        "Состав, капитаны, штаб, календарь ближайших матчей и фрагмент турнирной таблицы Премьер-лиги (ТЗ п.3)."
+    },
+    clubReserve: {
+      eyebrow: "Дубль",
+      title: "Резервная команда",
+      description: "Состав дубля и отчётные результаты выступлений (ТЗ п.4)."
+    },
+    clubWomen: {
+      eyebrow: "Женская",
+      title: "Женская команда «Алтай Өскемен»",
+      description: "Календарь, турнир и состав (ТЗ п.5)."
+    },
+    clubQj: {
+      eyebrow: "QJ League",
+      title: "QJ League",
+      description: "Состав и турнирная таблица (ТЗ п.6)."
+    },
+    clubCenter: {
+      eyebrow: "Центр",
+      title: "Футбольный центр «Алтай Өскемен»",
+      description:
+        "Более 600 воспитанников, методическая поддержка тренеров и прозрачная схема набора в группы по году рождения.\n\nВнизу страницы — таблица прямых телефонов тренеров и общий номер линии набора."
+    },
+    table: {
+      eyebrow: "Турнир",
+      title: "Турнирная таблица",
+      description:
+        "Премьер-лига, 2 лига (Жастар), женская команда и QJ League — переключайте вкладки. Данные с сайтов Казахстанской футбольной федерации и QJL; строка «Алтай Өскемен» выделена."
+    },
+    media: {
+      eyebrow: "Медиа",
+      title: "Фото и видео",
+      description: "Галереи матчей, фотосеты событий, обзоры и интервью (ТЗ п.16–17)."
+    },
+    documents: {
+      eyebrow: "Документы",
+      title: "Официальные документы",
+      description: "Учредительные, лицензионные, финансовые и регламентирующие файлы в PDF."
+    },
+    partners: {
+      eyebrow: "Партнёры",
+      title: "Сотрудничество и бренд",
+      description:
+        "Логотипы партнёров и описание форматов интеграции (бриф п.18); ниже — пакеты присутствия бренда."
+    },
+    admin: {
+      eyebrow: "CMS",
+      title: "Панель управления контентом",
+      description: "Добавление новостей, матчей и документов — интерфейс-заглушка под интеграцию (ТЗ п.23)."
+    }
+  },
+  clubUnit: {
+    roster: "Состав",
+    coaches: "Тренерский штаб",
+    calendar: "Календарь",
+    standings: "Турнирная таблица",
+    results: "Результаты",
+    groups: "Возрастные группы",
+    recruitment: "Набор в футбольный центр",
+    protocolPdf: "Протокол (PDF)",
+    fcAbout: "О футбольном центре",
+    fcContingent: "Контингент воспитанников",
+    fcBranch: "Филиал в городе Алтай (2025)",
+    fcMethodNote: "Методический штаб и развитие тренеров",
+    fcEnrollmentTable: "Номера для набора в ФЦ «Алтай Өскемен»",
+    fcCategory: "Категория (г.р.)",
+    fcCoach: "Тренер",
+    fcPhone: "Телефон",
+    fcEnrollmentHotline: "Номер для набора в футбольный центр",
+    fcEnrollmentHotlineLead:
+      "Единая линия для вопросов о зачислении. Подробная сетка контактов по году рождения — на странице «Футбольный центр».",
+    captains: "Капитаны команды"
+  },
+  adminCms: {
+    title: "Панель CMS",
+    lead: "Формы ниже — макет рабочего процесса; подключите API и авторизацию по проекту.",
+    newsBlock: "Новая новость",
+    matchesBlock: "Матч / результат",
+    documentsBlock: "Документ (PDF)",
+    hint: "Сохранение отключено в демо. Разместите обработчики на стороне бэкенда."
+  },
+  matchesBoard: {
+    schedule: "Расписание",
+    next: "Ближайший матч",
+    upcoming: "Предстоящие матчи",
+    pastInSchedule: "Прошедшие матчи",
+    results: "Результаты",
+    resultsLead:
+      "Официальные протоколы матчей, итоговый счёт и детали игр по регламенту федераций (бриф п.15)."
+  },
+  clubPortal: {
+    sportsTitle: "Команды клуба",
+    sportsLead:
+      "Спортивные направления по брифу: основная команда, дубль, женский состав, QJ League, футбольный центр.",
+    aboutTitle: "О клубе",
+    aboutLead: "История, достижения, инфраструктура (стадион, база, VAR) и контакты с картой и соцсетями.",
+    blurb: {
+      main: "Состав, тренеры, календарь и турнирная таблица.",
+      reserve: "Состав дубля и результаты матчей.",
+      women: "Состав, календарь и турнир женской команды.",
+      qj: "Состав и турнирная таблица QJ League.",
+      center: "Группы, тренеры, информация о наборе в футбольный центр.",
+      history: "Этапы развития клуба.",
+      regionFootballHistory: "Футбол в регионе: СССР, «Восток», чемпионат РК.",
+      achievements: "Титулы и награды.",
+      infrastructure: "Стадион, база, VAR-комната.",
+      contacts: "Адрес, карта, социальные сети."
+    }
+  },
+  partnersPage: {
+    logoGridTitle: "Логотипы партнёров и описание сотрудничества",
+    tiersTitle: "Уровни интеграции бренда"
+  }
+};
+
+const kk: Dictionary = {
+  location: "Өскемен, Қазақстан",
+  brandTitle: "ФК «Алтай Өскемен»",
+  brandSubtitle: "Клуб сайты · Премьер-лига",
+  nav: {
+    home: "Басты бет",
+    club: "Клуб",
+    aboutClub: "Клуб жайлы",
+    clubSports: "Клуб командалары",
+    news: "Жаңалықтар",
+    schedule: "Кесте",
+    results: "Нәтижелер",
+    table: "Кесте (турнир)",
+    squad: "Команда",
+    contacts: "Байланыс",
+    media: "Медиа",
+    partners: "Серіктестер",
+    documents: "Құжаттар",
+    admin: "CMS бақылау",
+    extrasAria: "Қосымша бөлімдер",
+    clubHub: "«Клуб» порталы",
+    menuOpenAria: "Навигация мәзірін ашу",
+    menuCloseAria: "Мәзірді жабу",
+    menuTitle: "Сайт бөлімдері",
+    mainNavAria: "Негізгі навигация"
+  },
+  clubAbout: {
+    history: "Тарих",
+    regionFootballHistory: "Шығыс Қазақстандағы футбол тарихы",
+    achievements: "Жетістіктер",
+    infrastructure: "Инфрақұрылым",
+    contacts: "Байланыс"
+  },
+  clubTeams: {
+    main: "Негізгі құрам",
+    reserve: "Дубль",
+    women: "Әйелдер командасы",
+    qj: "QJ League",
+    center: "Футбол орталығы"
+  },
+  teamSection: {
+    roster: "Негізгі құрам",
+    administration: "Әкімшілік",
+    coaching: "Бапкерлер штабы"
+  },
+  news: {
+    all: "Барлығы",
+    main: "Негізгі команда",
+    reserve: "Дубль",
+    women: "Әйелдер командасы",
+    qj: "QJ League",
+    center: "Футбол орталығы",
+    instagram: "Instagram",
+    closePost: "Жабу",
+    openPostHint: "Instagram постын ашу",
+    readMore: "Толығырақ",
+    backToNews: "← Барлық жаңалықтар"
+  },
+  langAria: "Интерфейс тілі",
+  home: {
+    newsSlider: "Жаңалықтар — слайдер",
+    nextMatch: "Келесі ойын",
+    latestNews: "Соңғы жаңалықтар",
+    tableBlock: "Турнир кестесі",
+    partners: "Клуб серіктестері",
+    allNews: "Барлық жаңалықтар",
+    fullTable: "Толық кесте",
+    statsSeason: "Маусым статистикасы",
+    aboutClub: "Клуб жайлы",
+    heroPromo: "Премьер-лигаға шығу",
+    heroLeague: "Премьер-лига",
+    heroSeason: "2026 маусым",
+    matchHeroTour: "{n} тур",
+    matchHeroKffMatchCard: "Матч картасы — kffleague.kz",
+    matchHeroKffYoutube: "KFF League",
+    matchHeroStadium: "Стадион"
+  },
+  standings: {
+    sourcePrefix: "Дереккөз:",
+    sourceLinkLabel: "KFF Премьер-лига кестесі (kffleague.kz)",
+    leagueTabsNav: "Лига бойынша кестелер",
+    leagueTabs: {
+      pl: "ПЛ (негізгі құрам)",
+      "2l": "2-лига (Жастар)",
+      women: "ЖФК",
+      qj: "QJ League"
+    },
+    sourceLinkByLeague: {
+      pl: "KFF Премьер-лига кестесі (kffleague.kz)",
+      "2l": "2-лига кестесі, B тобы (kffleague.kz)",
+      women: "Әйелдер командасының кестесі (kffleague.kz)",
+      qj: "QJL турнир кестесі (qjl.kz)"
+    },
+    emptyTable:
+      "Таңдалған лига үшін кесте жүктелмеді. Әрекетті кейінірек қайталаңыз немесе төмендегі сілтемеден ашыңыз.",
+    colRank: "#",
+    colTeam: "Команда",
+    colPlayed: "И",
+    colWins: "В",
+    colDraws: "Н",
+    colLosses: "П",
+    colGoals: "Доптар",
+    colPoints: "О",
+    colForm: "Форма"
+  },
+  footer: {
+    navTitle: "Бағыттар",
+    contactsTitle: "Байланыс",
+    lead:
+      "«Алтай Өскемен» ФК ресми сайты: жаңалықтар, ойындар, кесте, құрам, медиа және құжаттар.",
+    brandTagline: "Өскемен · Қазақстан",
+    navGroupMain: "Бастысы",
+    navGroupSeason: "Ойындар мен турнир",
+    navGroupTeam: "Команда",
+    navGroupMore: "Медиа және сервис"
+  },
+  documents: {
+    downloadPdf: "PDF жүктеу"
+  },
+  mediaSections: {
+    photos: "Фотогалерея",
+    video: "Бейне"
+  },
+  contactsPage: {
+    mapEyebrow: "Карта",
+    mapTitle: "Клуб кеңсесі және матч орталығы",
+    mapHint: "Интерактивті карта немесе база сұлбасы дайын болғанда орнатылады.",
+    socialTitle: "Әлеуметтік желілер"
+  },
+  intros: {
+    news: {
+      eyebrow: "Жаңалықтар",
+      title: "Клуб редакциясы",
+      description:
+        "Техникалық тапсырма бойынша барлық санаттар: негізгі құрам, дубль, әйелдер командасы, QJ League және футбол орталығы — сүзгімен."
+    },
+    newsFeed: {
+      eyebrow: "Қазір",
+      title: "Басты материал",
+      description: "Редакциядын ағымдағы акценті — ірі анонс немесе репортаж."
+    },
+    matches: {
+      eyebrow: "Ойындар",
+      title: "Кесте және нәтижелер",
+      description:
+        "Алдағы турлар мен аяқталған ойындардың хаттамалары — жанкүйер мен медиа үшін ыңғайлы форматта."
+    },
+    team: {
+      eyebrow: "Команда",
+      title: "Негізгі құрам",
+      description:
+        "Негізгі құрам құрамы линиялар бойынша; дубль, академия және QJ League — «Клуб командалары» бөлімінде."
+    },
+    teamAdministration: {
+      eyebrow: "Команда",
+      title: "Клуб әкімшілігі",
+      description: "Басқару органдары: лауазымдар және визуалды профильдер (фото — CMS арқылы)."
+    },
+    teamCoaching: {
+      eyebrow: "Команда",
+      title: "Барлық бағыттардың бапкерлер штабы",
+      description:
+        "Негізгі құрам, дубль, әйелдер, QJ League және футбол орталығының бапкерлері мен мамандары."
+    },
+    club: {
+      eyebrow: "Клуб",
+      title: "«Алтай Өскемен»: командалар мен клуб жайлы",
+      description:
+        "Негізгі құрам, дубль, әйелдер командасы, QJ League және футбол орталығы — клубтың бірыңғай спорттық жүйесі.\n\n«Клуб жайлы» бөлімінде тарих, жетістіктер, инфрақұрылым және байланыс мәліметтері жинақталған."
+    },
+    clubHistory: {
+      eyebrow: "Тарих",
+      title: "Клуб пен өңірдің дамуы",
+      description:
+        "2024 жылы «Алтай Өскемен» ФК құрылғаннан кейінгі негізгі қадамдар: лицензия, Қазақстан чемпионатының Премьер-лигасындағы қатысу, инфрақұрылым, балалар және қоғаммен жұмыс.\n\n2025 жылы Алтай қаласында футбол орталығының филиалы ашылды."
+    },
+    clubRegionFootballHistory: {
+      eyebrow: "Өңір",
+      title: "Шығыс Қазақстандағы футбол тарихы",
+      description:
+        "Зауыттар мен оқу орындарындағы әуесқой командалардан бастап «Шығыс» клубы, Қазақстан чемпионаты мен Еуропа кубогындағы қатысуға дейін — және бүгінгі Премьер-лигадағы «Алтай Өскемен» брендіне дейінгі жол."
+    },
+    clubAchievements: {
+      eyebrow: "Жетістіктер",
+      title: "Титулдар мен рекордтар",
+      description: "Сандар мен мәтіндер контент кеңейген сайын толықтырылады."
+    },
+    clubInfrastructure: {
+      eyebrow: "Инфрақұрылым",
+      title: "Стадион, база, VAR",
+      description:
+        "Спорт пен медиа ортасы: арена, жаттығу кешені, студия және VAR бөлмесі."
+    },
+    clubContacts: {
+      eyebrow: "Байланыс",
+      title: "Клубпен хабарласу",
+      description:
+        "Электрондық пошта, кеңсе телефоны және Өскемендегі қабылдау мекенжайы.\n\nФутбол орталығына іріктеу мәселелері бойынша жеке желі; бапкерлердің тікелей нөмірлері орталық бетінде көрсетілген."
+    },
+    clubMain: {
+      eyebrow: "Негізгі",
+      title: "Негізгі команда",
+      description:
+        "Құрам, капитандар, штаб, алдағы ойындар кестесі және Премьер-лига кестесінің фрагменті (ТЗ 3-тармақ)."
+    },
+    clubReserve: {
+      eyebrow: "Дубль",
+      title: "Резервтік команда",
+      description: "Дубль құрамы және өткізілген ойындар нәтижелері (ТЗ 4-тармақ)."
+    },
+    clubWomen: {
+      eyebrow: "Әйелдер",
+      title: "«Алтай Өскемен» әйелдер командасы",
+      description: "Кесте, турнир және құрам (ТЗ 5-тармақ)."
+    },
+    clubQj: {
+      eyebrow: "QJ League",
+      title: "QJ League",
+      description: "Құрам және турнир кестесі (ТЗ 6-тармақ)."
+    },
+    clubCenter: {
+      eyebrow: "Орталық",
+      title: "«Алтай Өскемен» футбол орталығы",
+      description:
+        "600-ден астам тарбиеленуші, бапкерлердің әдістемелік сүйемелдігі және жыл сайы бойынша топтарға іріктеу сұлбасы.\n\nТөменде бапкерлердің тікелей телефондары кестесі және іріктеу желісінің ортақ нөмірі берілген."
+    },
+    table: {
+      eyebrow: "Турнир",
+      title: "Турнир кестесі",
+      description:
+        "Премьер-лига, 2-лига (Жастар), әйелдер командасы және QJ League — бөлімдерді ауыстырыңыз. KFF және QJL сайттарының деректері; «Алтай Өскемен» бөлгіленеді."
+    },
+    media: {
+      eyebrow: "Медиа",
+      title: "Фото және бейне",
+      description: "Ойын галереялары, шаралар, шолулар мен сұхбаттар (ТЗ 16–17)."
+    },
+
+    documents: {
+      eyebrow: "Құжаттар",
+      title: "Ресми құжаттар",
+      description: "Құрылтайшылық, лицензиялық, қаржылық және регламент PDF файлдары."
+    },
+    partners: {
+      eyebrow: "Серіктестер",
+      title: "Серіктестік және бренд",
+      description:
+        "Серіктестер логотиптері мен әріптестік форматтарының сипаттамасы (бриф 18-п.); төменде брендтің болу деңгейлері."
+    },
+    admin: {
+      eyebrow: "CMS",
+      title: "Мазмұнды басқару панелі",
+      description: "Жаңалық, ойын және құжат қосу — интеграцияға арналған интерфейс (ТЗ 23)."
+    }
+  },
+  clubUnit: {
+    roster: "Құрам",
+    coaches: "Бапкерлер штабы",
+    calendar: "Кесте",
+    standings: "Турнир кестесі",
+    results: "Нәтижелер",
+    groups: "Жас топтары",
+    recruitment: "Футбол орталығына іріктеу",
+    protocolPdf: "Хаттама (PDF)",
+    fcAbout: "Футбол орталығы жайлы",
+    fcContingent: "Тарбиеленушілер контингенті",
+    fcBranch: "Алтай қаласындағы филиал (2025)",
+    fcMethodNote: "Әдістемелік штаб және бапкерлерді дамыту",
+    fcEnrollmentTable: "«Алтай Өскемен» ФО-на іріктеу телефондары",
+    fcCategory: "Санат (ж.т.)",
+    fcCoach: "Бапкер",
+    fcPhone: "Телефон",
+    fcEnrollmentHotline: "Футбол орталығына іріктеу нөмірі",
+    fcEnrollmentHotlineLead:
+      "Қабылдау мәселелері бойынша бірыңғай желі. Жыл сайынша бапкерлердің тікелей нөмірлері — «Футбол орталығы» бетінің соңында.",
+    captains: "Команданың капитандары"
+  },
+  adminCms: {
+    title: "CMS панелі",
+    lead: "Төмендегі формалар — жұмыс процесінің макеті; API мен авторизацияны жоба бойынша қосыңыз.",
+    newsBlock: "Жаңа жаңалық",
+    matchesBlock: "Ойын / нәтиже",
+    documentsBlock: "Құжат (PDF)",
+    hint: "Демода сақтау өшірілген. Өңдеуші тарапта хендлерлер орналастырыңыз."
+  },
+  matchesBoard: {
+    schedule: "Кесте",
+    next: "Келесі ойын",
+    upcoming: "Алдағы ойындар",
+    pastInSchedule: "Өткен ойындар",
+    results: "Нәтижелер",
+    resultsLead:
+      "Ресми хаттамалар, есеп пен ойын мәліметтері федерациялар регламентіне сәйкес (бриф 15-п.)."
+  },
+  clubPortal: {
+    sportsTitle: "Клуб командалары",
+    sportsLead:
+      "Негізгі құрам, дубль, әйелдер командасы, QJ League және футбол орталығы — бриф структурасы.",
+    aboutTitle: "Клуб жайлы",
+    aboutLead: "Тарих, жетістіктер, инфрақұрылым (стадион, база, VAR) және карта, әлеуметтік желілер.",
+    blurb: {
+      main: "Құрам, бапкерлер, кесте және турнир кестесі.",
+      reserve: "Дубль құрамы мен ойын нәтижелері.",
+      women: "Құрам, кесте және әйелдер турнирі.",
+      qj: "Құрам және QJ League кестесі.",
+      center: "Топтар, бапкерлер, іріктеу туралы ақпарат.",
+      history: "Клуб даму кезеңдері.",
+      regionFootballHistory: "Өңірдегі футбол: КСРО, «Шығыс», ҚР чемпионаты.",
+      achievements: "Титулдар мен марапаттар.",
+      infrastructure: "Стадион, база, VAR бөлмесі.",
+      contacts: "Мекенжай, карта, әлеуметтік желілер."
+    }
+  },
+  partnersPage: {
+    logoGridTitle: "Серіктестер логотиптері мен серіктестіктің сипаттамасы",
+    tiersTitle: "Корпоративтік серіктестік деңгейлері"
+  }
+};
+
+const map: Record<AppLocale, Dictionary> = { ru, kk };
+
+export function getDictionary(locale: string): Dictionary {
+  return locale === "kk" ? map.kk : map.ru;
+}

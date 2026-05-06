@@ -1,0 +1,9 @@
+.next
+node_modules
+out
+dist
+.DS_Store
+*.log
+
+# Пустой остаток после переноса в корень (если Windows не даёт удалить — не коммитьте)
+frontend/

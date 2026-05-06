@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="200" height="240" role="img" aria-label="@4010AK">
+  <defs>
+    <filter id="ordabasy-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="-3" dy="4" stdDeviation="4" flood-color="#7eb8e8" flood-opacity="0.45" />
+    </filter>
+  </defs>
+  <circle
+    cx="100"
+    cy="92"
+    r="68"
+    fill="#ffffff"
+    stroke="#b8d9f0"
+    stroke-width="1.25"
+    filter="url(#ordabasy-glow)"
+  />
+  <text
+    x="100"
+    y="106"
+    text-anchor="middle"
+    font-family="system-ui, -apple-system, 'Segoe UI', Arial, sans-serif"
+    font-size="50"
+    font-weight="700"
+    fill="#0f1f3d"
+  >
+    O
+  </text>
+  <text
+    x="100"
+    y="218"
+    text-anchor="middle"
+    font-family="system-ui, -apple-system, 'Segoe UI', Arial, sans-serif"
+    font-size="14"
+    font-weight="700"
+    fill="#0f1f3d"
+    letter-spacing="0.04em"
+  >
+     !+
+  </text>
+</svg>

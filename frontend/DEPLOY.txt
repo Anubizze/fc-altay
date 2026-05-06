@@ -1,0 +1,2 @@
+Vercel: в настройках проекта поле Root Directory оставьте пустым.
+Установка: pnpm install (есть vercel.json с framework nextjs).
