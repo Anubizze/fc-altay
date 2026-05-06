@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { getPremierStandingsWithLogos } from "@/shared/lib/kff-standings";
@@ -42,7 +43,7 @@ export async function StandingsPreview({ locale, title, moreLabel }: StandingsPr
               <td>
                 <span className="standings-preview__team-cell">
                   {r.logoUrl ? (
-                    <img
+                    <Image
                       className="standings-preview__logo-img"
                       src={r.logoUrl}
                       alt=""

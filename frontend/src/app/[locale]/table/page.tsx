@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import type { LeagueTableId } from "@/shared/config/league-tables";
 import { getDictionary } from "@/shared/i18n/dictionaries";
 import {
@@ -74,7 +76,7 @@ export default async function TablePage({
                             <td>
                               <div className="standings__team">
                                 {row.logoUrl ? (
-                                  <img
+                                  <Image
                                     className="standings__logo-img"
                                     src={row.logoUrl}
                                     alt=""
