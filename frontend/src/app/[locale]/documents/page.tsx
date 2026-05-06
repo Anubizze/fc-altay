@@ -1,11 +1,12 @@
 import { DocumentCard } from "@/entities/documents/document-card";
 import { documents } from "@/shared/content/site-content";
 import { getDictionary } from "@/shared/i18n/dictionaries";
+import type { AppLocale } from "@/shared/lib/locale-path";
 import { Container } from "@/shared/ui/container";
 import { PageIntro } from "@/shared/ui/page-intro";
 
 export default function DocumentsPage({ params }: { params: { locale: string } }) {
-  const locale = params.locale === "kk" ? "kk" : "ru";
+  const locale: AppLocale = params.locale === "kk" ? "kk" : "ru";
   const dict = getDictionary(locale);
 
   return (
